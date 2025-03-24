@@ -40,11 +40,13 @@ describe('Checkout System', () => {
     const total = co.total();
 
     // Check that the calculated total is correct
-    expect(total).toBeCloseTo(329.5, 2); // Example: after applying the package discount
+    expect(total).toBeCloseTo(249.00, 2); // Example: after applying the package discount
   });
 
   it('should apply bulk discount for eligible items', () => {
     // Scan items
+    co.scan('ipd');
+    co.scan('ipd');
     co.scan('ipd');
     co.scan('ipd');
     co.scan('ipd');
@@ -53,8 +55,24 @@ describe('Checkout System', () => {
     // Expected total after applying bulk discount on 'ipd'
     const total = co.total();
     
-    // Assuming a bulk discount brings 'ipd' price down to 100 each (mocked rule)
-    expect(total).toBeCloseTo(1779.99, 2); // Adjust this number based on your discount logic
+    // Assuming a bulk discount brings 'ipd' price down to 499.99 each
+    expect(total).toBeCloseTo(2529.95, 2);
+  });
+
+  it('should apply Package discount for eligible items', () => {
+    // Scan items
+    co.scan('atv');
+    co.scan('atv');
+    co.scan('atv');
+    co.scan('ipd');
+    co.scan('ipd');
+    co.scan('vga');
+
+    // Expected total after applying package discount on 'atv'
+    const total = co.total();
+    
+    // Assuming a package discount 3 for 2 deal on atv
+    expect(total).toBeCloseTo(1348.98, 2); 
   });
 
   it('should not apply a discount for invalid items', () => {
@@ -67,11 +85,12 @@ describe('Checkout System', () => {
 
     // Expected total after applying the package discount
     const total = co.total();
-    expect(total).toBeCloseTo(329.5, 2); // Only 'atv' should count for discount
+    expect(total).toBeCloseTo(249.00, 2); // Only 'atv' should count for discount
   });
 
   it('should not allow discount greater than total', () => {
     // Scan items that would lead to a discount greater than total
+    co.scan('atv');
     co.scan('atv');
     co.scan('atv');
     co.scan('atv');
@@ -91,7 +110,7 @@ describe('Checkout System', () => {
     co.scan('vga');
 
     let total = co.total();
-    expect(total).toBeCloseTo(219.0, 2); // Calculate the total before clearing
+    expect(total).toBeCloseTo(249.00, 2); // Calculate the total before clearing
 
     // Clear the cart
     co.clear();
@@ -102,6 +121,6 @@ describe('Checkout System', () => {
     co.scan('atv');
 
     total = co.total();
-    expect(total).toBeCloseTo(1299.99, 2); // Total after clearing and scanning new items
+    expect(total).toBeCloseTo(1209.48, 2); // Total after clearing and scanning new items
   });
 });
