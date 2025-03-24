@@ -37,12 +37,17 @@ Total expected: $249.00
 SKUs Scanned: atv, ipd, ipd, atv, ipd, ipd, ipd
 Total expected: $2718.95
 
-Notes on implementation:
 
-- use **Typescript**
-- don't build guis etc, we're more interested in your approach to solving the given task, not how shiny it looks
-- don't worry about making a command line interface to the application
-- don't use any frameworks
-- do include unit tests
+### Running on local system:
 
-When you've finished, send through the link to your github-repo.
+To run the main script via CLI:
+```bash
+  npm install
+  npm run build
+  npm start
+```
+
+To run test cases:
+```bash
+  npm run test
+```
